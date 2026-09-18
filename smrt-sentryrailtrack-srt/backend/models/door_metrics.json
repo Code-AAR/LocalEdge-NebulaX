@@ -1,0 +1,32 @@
+{
+  "accuracy": 1.0,
+  "macro_f1": 1.0,
+  "per_class": {
+    "Normal": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 16
+    },
+    "Abnormal resistance": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 6
+    }
+  },
+  "confusion_matrix": [
+    [
+      16,
+      0
+    ],
+    [
+      0,
+      6
+    ]
+  ],
+  "classes": [
+    "Normal",
+    "Abnormal resistance"
+  ]
+}

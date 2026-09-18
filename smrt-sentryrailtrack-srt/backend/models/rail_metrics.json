@@ -1,0 +1,47 @@
+{
+  "accuracy": 0.9636,
+  "macro_f1": 0.8483,
+  "weighted_f1": 0.9627,
+  "per_class": {
+    "Normal": {
+      "precision": 0.9792,
+      "recall": 1.0,
+      "f1": 0.9895,
+      "support": 47
+    },
+    "Side I": {
+      "precision": 0.6667,
+      "recall": 0.6667,
+      "f1": 0.6667,
+      "support": 3
+    },
+    "Side II": {
+      "precision": 1.0,
+      "recall": 0.8,
+      "f1": 0.8889,
+      "support": 5
+    }
+  },
+  "confusion_matrix": [
+    [
+      47,
+      0,
+      0
+    ],
+    [
+      1,
+      2,
+      0
+    ],
+    [
+      0,
+      1,
+      4
+    ]
+  ],
+  "classes": [
+    "Normal",
+    "Side I",
+    "Side II"
+  ]
+}

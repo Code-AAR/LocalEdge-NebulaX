@@ -1,0 +1,6 @@
+{
+  "name": "SMRT SentryRailTrack",
+  "description": "SRT predictive maintenance engine across 4 subsystems (Door, ACV, Rail Corrugation, SHM), dual-user framing (Strategic vs Tactical), and autonomous TrackBot fleet console.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

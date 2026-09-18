@@ -1,0 +1,631 @@
+@import "tailwindcss";
+
+/* SMRT Transit Typography - Ocean Sans (Humanist Sans-Serif with curved 'l'/'t', open counter 'e', slight stroke contrast) */
+@font-face {
+  font-family: 'Ocean Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Ocean Sans SemiBold'), local('Ocean Sans Semi Bold'), local('Ocean Sans MT SemiBold'), local('Ocean Sans Std SemiBold'), local('OceanSans-SemiBold');
+}
+
+@font-face {
+  font-family: 'Ocean Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Ocean Sans Bold'), local('Ocean Sans MT Bold'), local('Ocean Sans Std Bold'), local('OceanSans-Bold');
+}
+
+@font-face {
+  font-family: 'Ocean Sans';
+  font-style: normal;
+  font-weight: 400 500;
+  src: local('Ocean Sans'), local('Ocean Sans Regular'), local('Ocean Sans MT'), local('Ocean Sans Std'), local('OceanSans');
+}
+
+@theme {
+  --font-ocean: "Ocean Sans", "Ocean Sans SemiBold", "Ocean Sans Bold", "Ocean Sans MT", "Ocean Sans Std", "Fira Sans", "Signika", "Trebuchet MS", system-ui, sans-serif;
+  --font-headline-xl: var(--font-ocean);
+  --font-headline-lg: var(--font-ocean);
+  --font-headline-md: var(--font-ocean);
+  --font-headline-sm: var(--font-ocean);
+  --font-headline-lg-mobile: var(--font-ocean);
+  --font-headline-xl-mobile: var(--font-ocean);
+  --font-body-lg: var(--font-ocean);
+  --font-body-md: var(--font-ocean);
+  --font-body-sm: var(--font-ocean);
+  --font-label-lg: "JetBrains Mono", monospace;
+  --font-label-md: "JetBrains Mono", monospace;
+  --font-label-sm: "JetBrains Mono", monospace;
+  --font-telemetry-display: "JetBrains Mono", monospace;
+
+  --color-primary: #e11a2b;
+  --color-primary-hover: #c0001d;
+  --color-surface: #0b0e14;
+  --color-surface-dim: #0b0e12;
+  --color-surface-bright: #2c3448;
+  --color-surface-container-lowest: #06080c;
+  --color-surface-container-low: #0e121a;
+  --color-surface-container: #12161f;
+  --color-surface-container-high: #191e2b;
+  --color-surface-container-highest: #222838;
+  --color-on-surface: #ffffff;
+  --color-on-surface-variant: #94a3b8;
+  --color-outline: #333d52;
+  --color-outline-variant: #222838;
+  --color-error: #ff4d5e;
+}
+
+@layer base {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #0b0e14;
+    color: #ffffff;
+    font-family: 'Ocean Sans', 'Ocean Sans SemiBold', 'Ocean Sans Bold', 'Ocean Sans MT', 'Ocean Sans Std', 'Fira Sans', 'Signika', 'Trebuchet MS', system-ui, sans-serif;
+    font-weight: 600; /* Default to Ocean Sans Semi Bold for authentic SMRT signage feel */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  /* Mobile inertial smooth scrolling helper */
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* Custom Typography Utility Classes - SMRT Ocean Sans Style with Humanist Proportions */
+.font-headline-xl {
+  font-family: 'Ocean Sans', 'Ocean Sans Bold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 42px;
+  line-height: 50px;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+.font-headline-lg {
+  font-family: 'Ocean Sans', 'Ocean Sans Bold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+.font-headline-lg-mobile {
+  font-family: 'Ocean Sans', 'Ocean Sans SemiBold', 'Ocean Sans Bold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 26px;
+  line-height: 34px;
+  letter-spacing: 0em;
+  font-weight: 600;
+}
+.font-headline-md {
+  font-family: 'Ocean Sans', 'Ocean Sans SemiBold', 'Ocean Sans Bold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0em;
+  font-weight: 600;
+}
+.font-headline-sm {
+  font-family: 'Ocean Sans', 'Ocean Sans SemiBold', 'Ocean Sans Bold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+.font-body-lg {
+  font-family: 'Ocean Sans', 'Ocean Sans SemiBold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+}
+.font-body-md {
+  font-family: 'Ocean Sans', 'Ocean Sans SemiBold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 600;
+}
+.font-body-sm {
+  font-family: 'Ocean Sans', 'Ocean Sans SemiBold', 'Ocean Sans MT', 'Fira Sans', 'Signika', 'Trebuchet MS', sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+}
+.font-label-lg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+.font-label-md {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.font-label-sm {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.font-telemetry-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  line-height: 32px;
+  letter-spacing: 0.02em;
+  font-weight: 800;
+}
+
+/* Material Symbols Outlined Configuration */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'liga';
+}
+
+/* Spacing and Padding Utilities */
+.px-margin {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.gap-space-xs { gap: 0.25rem; }
+.gap-space-sm { gap: 0.5rem; }
+.gap-space-md { gap: 0.75rem; }
+.gap-space-lg { gap: 1.25rem; }
+.gap-space-xl { gap: 1.75rem; }
+
+.p-space-xs { padding: 0.25rem; }
+.p-space-sm { padding: 0.5rem; }
+.p-space-md { padding: 0.75rem; }
+.p-space-lg { padding: 1.25rem; }
+.p-space-xl { padding: 1.75rem; }
+
+.py-space-xs { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.py-space-sm { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-space-md { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-space-lg { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+
+.px-space-xs { padding-left: 0.25rem; padding-right: 0.25rem; }
+.px-space-sm { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-space-md { padding-left: 0.75rem; padding-right: 0.75rem; }
+.px-space-lg { padding-left: 1.25rem; padding-right: 1.25rem; }
+
+/* Hide scrollbars */
+::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==========================================================================
+   SENIOR / HIGH-LEGIBILITY LARGE TEXT MODE SYSTEM
+   ========================================================================== */
+html.senior-mode {
+  font-size: 118%;
+}
+
+.senior-mode {
+  letter-spacing: 0.01em;
+}
+
+/* Globally scale micro, small, and body text classes when Senior Mode is active */
+.senior-mode .text-\[8px\],
+.senior-mode .text-\[9px\],
+.senior-mode .text-\[10px\],
+.senior-mode .text-\[11px\],
+.senior-mode .text-\[12px\],
+.senior-mode .text-xs,
+.senior-mode .font-label-sm {
+  font-size: 0.95rem !important;
+  line-height: 1.45rem !important;
+  font-weight: 700;
+}
+
+.senior-mode .text-sm,
+.senior-mode .font-label-md,
+.senior-mode .font-body-sm {
+  font-size: 1.125rem !important;
+  line-height: 1.65rem !important;
+  font-weight: 600;
+}
+
+.senior-mode .text-base,
+.senior-mode .font-label-lg,
+.senior-mode .font-body-md {
+  font-size: 1.25rem !important;
+  line-height: 1.8rem !important;
+  font-weight: 600;
+}
+
+.senior-mode .text-lg,
+.senior-mode .font-body-lg {
+  font-size: 1.45rem !important;
+  line-height: 2rem !important;
+  font-weight: 700;
+}
+
+.senior-mode .text-xl,
+.senior-mode .font-headline-sm {
+  font-size: 1.65rem !important;
+  line-height: 2.2rem !important;
+  font-weight: 800;
+}
+
+.senior-mode .text-2xl,
+.senior-mode .font-headline-md {
+  font-size: 1.95rem !important;
+  line-height: 2.5rem !important;
+  font-weight: 800;
+}
+
+.senior-mode .text-3xl,
+.senior-mode .font-headline-lg,
+.senior-mode .font-headline-lg-mobile {
+  font-size: 2.45rem !important;
+  line-height: 2.95rem !important;
+  font-weight: 900;
+}
+
+.senior-mode .text-4xl,
+.senior-mode .font-headline-xl,
+.senior-mode .font-headline-xl-mobile,
+.senior-mode .font-telemetry-display {
+  font-size: 2.95rem !important;
+  line-height: 3.4rem !important;
+  font-weight: 900;
+}
+
+/* Scale inputs, textareas, selects, and buttons in Senior Mode */
+.senior-mode input,
+.senior-mode textarea,
+.senior-mode select {
+  font-size: 1.15rem !important;
+  line-height: 1.65rem !important;
+}
+
+.senior-mode input::placeholder,
+.senior-mode textarea::placeholder {
+  font-size: 1.1rem !important;
+}
+
+.senior-mode button {
+  font-size: 1.05rem !important;
+}
+
+/* Enlarge Material Icons slightly for senior high-visibility */
+.senior-mode .material-symbols-outlined {
+  font-size: 1.2em;
+}
+
+/* ==========================================================================
+   LIGHT & DARK THEME ADAPTIVE SYSTEM (SMRT Nocturnal vs Daylight Depot)
+   ========================================================================== */
+[data-theme="light"], .light {
+  color-scheme: light;
+  background-color: #F4F6F9 !important;
+  color: #0F172A !important;
+}
+
+[data-theme="light"] body,
+.light body {
+  background-color: #F4F6F9 !important;
+  color: #0F172A !important;
+}
+
+/* Light mode background surfaces */
+[data-theme="light"] .bg-\[\#0B0E14\],
+.light .bg-\[\#0B0E14\],
+[data-theme="light"] .bg-\[\#0b0e14\],
+.light .bg-\[\#0b0e14\] {
+  background-color: #F4F6F9 !important;
+  color: #0F172A !important;
+}
+
+[data-theme="light"] .bg-\[\#06080C\],
+.light .bg-\[\#06080C\],
+[data-theme="light"] .bg-\[\#06080c\],
+.light .bg-\[\#06080c\] {
+  background-color: #F1F5F9 !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+[data-theme="light"] .bg-\[\#0E121A\],
+.light .bg-\[\#0E121A\],
+[data-theme="light"] .bg-\[\#0e121a\],
+.light .bg-\[\#0e121a\] {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .bg-\[\#12161F\],
+.light .bg-\[\#12161F\],
+[data-theme="light"] .bg-\[\#12161f\],
+.light .bg-\[\#12161f\] {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+  border-color: #CBD5E1 !important;
+}
+
+[data-theme="light"] .bg-\[\#191E2B\],
+.light .bg-\[\#191E2B\],
+[data-theme="light"] .bg-\[\#191e2b\],
+.light .bg-\[\#191e2b\] {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+[data-theme="light"] .bg-\[\#222838\],
+.light .bg-\[\#222838\] {
+  background-color: #F1F5F9 !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+/* Translucent panels and pills in light mode */
+[data-theme="light"] .bg-black\/10,
+.light .bg-black\/10,
+[data-theme="light"] .bg-black\/20,
+.light .bg-black\/20,
+[data-theme="light"] .bg-black\/30,
+.light .bg-black\/30,
+[data-theme="light"] .bg-black\/40,
+.light .bg-black\/40,
+[data-theme="light"] .bg-black\/50,
+.light .bg-black\/50,
+[data-theme="light"] .bg-black\/60,
+.light .bg-black\/60 {
+  background-color: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+/* Red alert banners in light mode */
+[data-theme="light"] .bg-red-950\/20,
+.light .bg-red-950\/20,
+[data-theme="light"] .bg-red-950\/30,
+.light .bg-red-950\/30,
+[data-theme="light"] .bg-red-950\/40,
+.light .bg-red-950\/40,
+[data-theme="light"] .bg-red-950\/50,
+.light .bg-red-950\/50 {
+  background-color: #FEF2F2 !important;
+  border-color: #FCA5A5 !important;
+  color: #991B1B !important;
+}
+
+/* ==========================================================================
+   HIGH-CONTRAST READABLE TEXT COLORS FOR LIGHT MODE
+   All text against light backgrounds is deeply contrasting (WCAG AAA compliant)
+   ========================================================================== */
+
+/* Primary high-contrast text */
+[data-theme="light"] .text-white,
+.light .text-white {
+  color: #0F172A !important;
+}
+
+/* Translucent white text converted to crisp dark slate */
+[data-theme="light"] .text-white\/90,
+.light .text-white\/90,
+[data-theme="light"] .text-white\/80,
+.light .text-white\/80,
+[data-theme="light"] .text-white\/70,
+.light .text-white\/70,
+[data-theme="light"] .text-white\/60,
+.light .text-white\/60,
+[data-theme="light"] .text-white\/50,
+.light .text-white\/50,
+[data-theme="light"] .text-white\/40,
+.light .text-white\/40 {
+  color: #1E293B !important;
+}
+
+/* Light slate & light gray classes converted to dark legible slate */
+[data-theme="light"] .text-\[\#CBD5E1\],
+.light .text-\[\#CBD5E1\],
+[data-theme="light"] .text-\[\#cbd5e1\],
+.light .text-\[\#cbd5e1\],
+[data-theme="light"] .text-slate-100,
+.light .text-slate-100,
+[data-theme="light"] .text-slate-200,
+.light .text-slate-200,
+[data-theme="light"] .text-slate-300,
+.light .text-slate-300,
+[data-theme="light"] .text-gray-100,
+.light .text-gray-100,
+[data-theme="light"] .text-gray-200,
+.light .text-gray-200,
+[data-theme="light"] .text-gray-300,
+.light .text-gray-300,
+[data-theme="light"] .text-\[\#F1F5F9\],
+.light .text-\[\#F1F5F9\] {
+  color: #1E293B !important;
+}
+
+/* Muted secondary labels: from washed-out gray to clear high-contrast slate */
+[data-theme="light"] .text-\[\#94A3B8\],
+.light .text-\[\#94A3B8\],
+[data-theme="light"] .text-\[\#94a3b8\],
+.light .text-\[\#94a3b8\],
+[data-theme="light"] .text-slate-400,
+.light .text-slate-400,
+[data-theme="light"] .text-gray-400,
+.light .text-gray-400 {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .text-slate-500,
+.light .text-slate-500 {
+  color: #475569 !important;
+}
+
+/* Status colors optimized for light backgrounds */
+[data-theme="light"] .text-\[\#ffb4ab\],
+.light .text-\[\#ffb4ab\],
+[data-theme="light"] .text-\[\#ffb3ae\],
+.light .text-\[\#ffb3ae\] {
+  color: #B91C1C !important;
+}
+
+[data-theme="light"] .text-\[\#ff4d5e\],
+.light .text-\[\#ff4d5e\] {
+  color: #DC2626 !important;
+}
+
+[data-theme="light"] .text-emerald-400,
+.light .text-emerald-400,
+[data-theme="light"] .text-emerald-300,
+.light .text-emerald-300 {
+  color: #047857 !important;
+}
+
+[data-theme="light"] .text-amber-400,
+.light .text-amber-400,
+[data-theme="light"] .text-amber-300,
+.light .text-amber-300 {
+  color: #B45309 !important;
+}
+
+[data-theme="light"] .text-sky-400,
+.light .text-sky-400,
+[data-theme="light"] .text-blue-400,
+.light .text-blue-400,
+[data-theme="light"] .text-indigo-400,
+.light .text-indigo-400 {
+  color: #0369A1 !important;
+}
+
+/* Form inputs, textareas, and selects in light mode */
+[data-theme="light"] input:not([type="checkbox"]):not([type="radio"]),
+.light input:not([type="checkbox"]):not([type="radio"]),
+[data-theme="light"] textarea,
+.light textarea,
+[data-theme="light"] select,
+.light select {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+[data-theme="light"] input::placeholder,
+.light input::placeholder,
+[data-theme="light"] textarea::placeholder,
+.light textarea::placeholder {
+  color: #64748B !important;
+  opacity: 1 !important;
+}
+
+/* Light mode borders */
+[data-theme="light"] .border-white\/10,
+.light .border-white\/10,
+[data-theme="light"] .border-white\/15,
+.light .border-white\/15,
+[data-theme="light"] .border-white\/20,
+.light .border-white\/20,
+[data-theme="light"] .border-white\/25,
+.light .border-white\/25,
+[data-theme="light"] .border-white\/30,
+.light .border-white\/30,
+[data-theme="light"] .border-white\/40,
+.light .border-white\/40 {
+  border-color: rgba(15, 23, 42, 0.16) !important;
+}
+
+/* Retain high-contrast WHITE text on solid SMRT Red buttons, emerald status pills, and dark chips */
+[data-theme="light"] .bg-\[\#E11A2B\],
+.light .bg-\[\#E11A2B\],
+[data-theme="light"] .bg-\[\#e11a2b\],
+.light .bg-\[\#e11a2b\],
+[data-theme="light"] .bg-\[\#c0001d\],
+.light .bg-\[\#c0001d\],
+[data-theme="light"] .bg-\[\#c91424\],
+.light .bg-\[\#c91424\],
+[data-theme="light"] .bg-red-600,
+.light .bg-red-600,
+[data-theme="light"] .bg-red-700,
+.light .bg-red-700,
+[data-theme="light"] .bg-emerald-600,
+.light .bg-emerald-600,
+[data-theme="light"] .bg-emerald-700,
+.light .bg-emerald-700,
+[data-theme="light"] .bg-sky-600,
+.light .bg-sky-600,
+[data-theme="light"] .bg-blue-600,
+.light .bg-blue-600,
+[data-theme="light"] .bg-indigo-600,
+.light .bg-indigo-600,
+[data-theme="light"] .bg-slate-900,
+.light .bg-slate-900,
+[data-theme="light"] .bg-\[\#E11A2B\] *,
+.light .bg-\[\#E11A2B\] *,
+[data-theme="light"] .bg-\[\#e11a2b\] *,
+.light .bg-\[\#e11a2b\] *,
+[data-theme="light"] .bg-\[\#c0001d\] *,
+.light .bg-\[\#c0001d\] *,
+[data-theme="light"] .bg-\[\#c91424\] *,
+.light .bg-\[\#c91424\] *,
+[data-theme="light"] .bg-red-600 *,
+.light .bg-red-600 *,
+[data-theme="light"] .bg-red-700 *,
+.light .bg-red-700 *,
+[data-theme="light"] .bg-emerald-600 *,
+.light .bg-emerald-600 *,
+[data-theme="light"] .bg-emerald-700 *,
+.light .bg-emerald-700 *,
+[data-theme="light"] .bg-sky-600 *,
+.light .bg-sky-600 *,
+[data-theme="light"] .bg-blue-600 *,
+.light .bg-blue-600 *,
+[data-theme="light"] .bg-indigo-600 *,
+.light .bg-indigo-600 *,
+[data-theme="light"] .bg-slate-900 *,
+.light .bg-slate-900 * {
+  color: #FFFFFF !important;
+}
+
+/* Image overlay tags and camera feeds retain white text */
+[data-theme="light"] [class*="bg-\[\#06080C\]\/"],
+.light [class*="bg-\[\#06080C\]\/"],
+[data-theme="light"] [class*="bg-\[\#0b0e12\]\/"],
+.light [class*="bg-\[\#0b0e12\]\/"],
+[data-theme="light"] [class*="bg-\[\#06080C\]\/"] *,
+.light [class*="bg-\[\#06080C\]\/"] *,
+[data-theme="light"] [class*="bg-\[\#0b0e12\]\/"] *,
+.light [class*="bg-\[\#0b0e12\]\/"] * {
+  color: #FFFFFF !important;
+}

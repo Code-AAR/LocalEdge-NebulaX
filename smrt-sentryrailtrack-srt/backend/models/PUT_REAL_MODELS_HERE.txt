@@ -1,0 +1,5 @@
+Drop your REAL trained models here so the backend serves live predictions:
+  rail_cnn.keras  rail_scaler.npz  rail_labels.json   (from train_rail_cnn.py, macro-F1 0.813)
+  door_cnn.keras  door_scaler.npz  door_labels.json   (from train_door_cnn.py)
+These are the actual TensorFlow models. The Node/React app cannot run them
+directly - this Python backend does, and the app calls it.
