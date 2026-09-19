@@ -27,8 +27,9 @@ import pandas as pd
 
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3")
 import tensorflow as tf
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 APP_DIR   = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(APP_DIR, "models")
@@ -43,7 +44,26 @@ DOOR_FEATURE_COLS = ["Motor current(mA)", "Motor Voltage(10mV)", "Motor electrod
                      "Door Locked", "Door is opening", "Door is closing", "Door leaf position"]
 
 app = FastAPI(title="LocalEdge Prediction API", version="1.0")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"],
+                   allow_headers=["*"], expose_headers=["*"])
+
+
+# Guarantee CORS headers on EVERY response, including 500s. Without this, an
+# unhandled error in a route returns a 500 with no Access-Control-Allow-Origin
+# header, and the browser reports it as a CORS error that hides the real cause.
+@app.exception_handler(Exception)
+async def _cors_safe_errors(request: Request, exc: Exception):
+    return JSONResponse(status_code=500,
+                        content={"detail": f"{type(exc).__name__}: {exc}"},
+                        headers={"Access-Control-Allow-Origin": "*"})
+
+
+@app.exception_handler(HTTPException)
+async def _cors_safe_http_errors(request: Request, exc: HTTPException):
+    return JSONResponse(status_code=exc.status_code,
+                        content={"detail": exc.detail},
+                        headers={"Access-Control-Allow-Origin": "*"})
+
 
 _BUNDLES = {}
 
