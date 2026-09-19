@@ -49,6 +49,7 @@ export const TrackPulseSubsystemEngine: React.FC<TrackPulseSubsystemEngineProps>
   const [isCustomMode, setIsCustomMode] = useState<boolean>(false);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [liveCsv, setLiveCsv] = useState<string | null>(null); // real model output for the last uploaded held-out file(s)
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -87,6 +88,74 @@ export const TrackPulseSubsystemEngine: React.FC<TrackPulseSubsystemEngineProps>
         break;
     }
     onAskAiAdvisor(prompt);
+  };
+
+  // Optional backend URL (set VITE_INFERENCE_API to your deployed FastAPI URL)
+  const INFERENCE_API = ((import.meta as any).env?.VITE_INFERENCE_API as string) || '';
+
+  const PRED_FILE: Record<string, string> = {
+    door: 'door_predictions.csv',
+    acv: 'acv_predictions.csv',
+    rail: 'rail_predictions.csv',
+    shm: 'shm_predictions.csv',
+  };
+
+  const triggerCsvDownload = (text: string, filename: string) => {
+    const blob = new Blob([text], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Run the REAL trained models on uploaded held-out file(s) via the backend API
+  const handleRealInference = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    if (!INFERENCE_API) {
+      showToast('Set VITE_INFERENCE_API to your deployed model backend URL first.');
+      return;
+    }
+    setIsProcessing(true);
+    try {
+      const fd = new FormData();
+      // rail & shm take many files (field "files"); door & acv take one (field "file")
+      if (activeSubsystem === 'rail' || activeSubsystem === 'shm') {
+        Array.from(files).forEach((f) => fd.append('files', f));
+      } else {
+        fd.append('file', files[0]);
+      }
+      const res = await fetch(`${INFERENCE_API}/predict/${activeSubsystem}`, { method: 'POST', body: fd });
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      setLiveCsv(data.csv);
+      showToast(`Model ran on ${files.length} file(s) — ${data.rows.length} prediction(s) ready to download.`);
+    } catch (err: any) {
+      showToast('Inference failed: ' + String(err?.message || 'error').slice(0, 60));
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  // Download predictions: the live model output if we have one, else the bundled real CSV
+  const handleDownloadPredictions = async () => {
+    const filename = PRED_FILE[activeSubsystem];
+    if (liveCsv) {
+      triggerCsvDownload(liveCsv, filename);
+      showToast(`Downloaded ${filename} (live model output)`);
+      return;
+    }
+    try {
+      const res = await fetch(`/submission/${filename}`);
+      if (!res.ok) throw new Error('missing');
+      triggerCsvDownload(await res.text(), filename);
+      showToast(`Downloaded ${filename}`);
+    } catch {
+      showToast(`Could not load ${filename}`);
+    }
   };
 
   return (
@@ -532,6 +601,24 @@ export const TrackPulseSubsystemEngine: React.FC<TrackPulseSubsystemEngineProps>
               </div>
             )}
 
+            {/* Upload held-out test file(s) -> run the REAL model via the backend */}
+            <div className="mt-3">
+              <label className="flex items-center gap-2 text-xs text-[#94A3B8] cursor-pointer">
+                <span className="material-symbols-outlined text-[18px] text-emerald-400">upload_file</span>
+                <span>Upload held-out {activeSubsystem.toUpperCase()} test file(s) to run the real model</span>
+                <input
+                  type="file"
+                  multiple={activeSubsystem === 'rail' || activeSubsystem === 'shm'}
+                  accept=".csv,.xlsx"
+                  onChange={(e) => handleRealInference(e.target.files)}
+                  className="hidden"
+                />
+                <span className="px-3 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-mono text-[11px] font-bold">
+                  Choose file(s)
+                </span>
+              </label>
+            </div>
+
             {/* Run Inference Button */}
             <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
               <button
@@ -553,6 +640,15 @@ export const TrackPulseSubsystemEngine: React.FC<TrackPulseSubsystemEngineProps>
               >
                 <span className="material-symbols-outlined text-[18px]">chat</span>
                 Ask SRT AI
+              </button>
+
+              <button
+                type="button"
+                onClick={handleDownloadPredictions}
+                className="px-4 py-2.5 rounded-xl bg-emerald-600/80 hover:bg-emerald-600 text-white font-mono text-xs font-bold transition active:scale-95 cursor-pointer flex items-center gap-1.5"
+              >
+                <span className="material-symbols-outlined text-[18px]">download</span>
+                Download {activeSubsystem}_predictions.csv
               </button>
             </div>
           </div>
