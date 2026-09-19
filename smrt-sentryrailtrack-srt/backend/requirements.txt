@@ -2,8 +2,8 @@ fastapi
 uvicorn[standard]
 python-multipart
 tensorflow-cpu
-numpy
+numpy>=2.0,<3
 pandas
-scikit-learn
+scikit-learn==1.7.2
 joblib
 openpyxl
